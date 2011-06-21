@@ -3,7 +3,8 @@ package bemax.dropbomsforandroid;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+import android.graphics.Canvas;
+import android.view.SurfaceHolder;
 
 public class Hero {
 	private int x;
@@ -12,11 +13,12 @@ public class Hero {
 	private Bitmap bitmap;
 	private int target;
 
-	public Hero(){
+	public Hero(Resources r, int id){
 		x = 190;
 		y = 400;
 		speed = 15;
 		target = 190;
+		bitmap = BitmapFactory.decodeResource(r, id);
 	}
 
 	public void move(){
@@ -36,41 +38,11 @@ public class Hero {
 		}
 	}
 
+	public void drawHero(Canvas canvas){
+		canvas.drawBitmap(bitmap, x, y, null);
+	}
+
 	public void chase(int tx){
 		target = tx - bitmap.getWidth() / 2;
 	}
-
-	public void setBitmap(Resources r, int id){
-		bitmap = BitmapFactory.decodeResource(r, id);
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
-	public Bitmap getBitmap() {
-		return bitmap;
-	}
-
-
 }

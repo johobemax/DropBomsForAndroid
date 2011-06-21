@@ -10,9 +10,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
-	private Paint paint;
 	private Hero hero;
-	private Context context;
+	private Bom[] boms;
 	private SurfaceHolder holder;
 	private boolean isAttached;
 	private Thread thread;
@@ -20,20 +19,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 	public GameView(Context context) {
 		super(context);
 		// TODO ペイントの初期化
-		this.context = context;
-		paint = new Paint();
 		holder = this.getHolder();
 		holder.addCallback(this);
-		hero = new Hero();
-		hero.setBitmap(getResources(), R.drawable.icon);
 
+		hero = new Hero(getResources(), R.drawable.icon);
+
+		boms = new Bom[3];
+		for(int i=0; i<boms.length; i++){
+			boms[i] = new Bom(getResources(), R.drawable.icon);
+		}
 	}
 
 	public void draw(SurfaceHolder h) {
 		// TODO 画像を書く
 		Canvas canvas = h.lockCanvas();
 		canvas.drawColor(Color.BLACK);
-		canvas.drawBitmap(hero.getBitmap(), hero.getX(), hero.getY(), paint);
+		hero.drawHero(canvas);
+		for(Bom b: boms){
+			b.drawBom(canvas);
+		}
 		h.unlockCanvasAndPost(canvas);
 	}
 
@@ -68,7 +72,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 		case MotionEvent.ACTION_MOVE:		// タッチしたまま動いた
 			x = (int)event.getX();
 			hero.chase(x);
-			Log.d("Antion","Move");
 			break;
 		case MotionEvent.ACTION_UP:			// タッチした指が離れた
 			x = -1;
@@ -88,11 +91,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
 	public void run() {
 		// TODO ゲームの処理ルーチン
-		while(true){
+		while(isAttached){
 			hero.move();
+			for(Bom b: boms){
+				b.drop();
+			}
 			draw(holder);
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
