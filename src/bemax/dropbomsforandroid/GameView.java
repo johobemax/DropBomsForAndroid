@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -13,6 +12,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	private Paint paint;
 	private SurfaceHolder holder;
 
+	
+	
 	public GameView(Context context) {
 		super(context);
 		// TODO ペイントの初期化
@@ -27,6 +28,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		paint.setColor(Color.RED);
 		canvas.drawRect(new Rect(10,10,100,100), paint);
 		holder.unlockCanvasAndPost(canvas);
+
+		this.setBackgroundColor(Color.BLUE);
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
