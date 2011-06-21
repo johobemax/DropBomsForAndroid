@@ -3,7 +3,7 @@ package bemax.dropbomsforandroid;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class DropBomsForAndroidActivity extends Activity {
+public class DropBomsForAndroidActivity extends Activity{
 	private GameView gameView;
 
 	/** Called when the activity is first created. */
@@ -13,8 +13,6 @@ public class DropBomsForAndroidActivity extends Activity {
 
         gameView = new GameView(this);
         setContentView(gameView);
-
-
     }
 
     @Override
@@ -35,4 +33,5 @@ public class DropBomsForAndroidActivity extends Activity {
     	// TODO 自動生成されたメソッド・スタブ
     	super.onDestroy();
     }
+
 }
