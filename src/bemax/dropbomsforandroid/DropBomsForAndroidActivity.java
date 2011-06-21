@@ -2,6 +2,7 @@ package bemax.dropbomsforandroid;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.SurfaceView;
 
 public class DropBomsForAndroidActivity extends Activity{
 	private GameView gameView;
@@ -11,8 +12,9 @@ public class DropBomsForAndroidActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gameView = new GameView(this);
-        setContentView(gameView);
+        setContentView(R.layout.gameplay);
+        SurfaceView sView = (SurfaceView)findViewById(R.id.gameView);
+        gameView = new GameView(sView);
     }
 
     @Override

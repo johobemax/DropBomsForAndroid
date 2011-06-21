@@ -1,33 +1,35 @@
 package bemax.dropbomsforandroid;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
+import android.location.Address;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
+public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListener{
 	private Hero hero;
 	private Bom[] boms;
 	private SurfaceHolder holder;
 	private boolean isAttached;
 	private Thread thread;
 
-	public GameView(Context context) {
-		super(context);
+	public GameView(SurfaceView sView) {
 		// TODO ペイントの初期化
-		holder = this.getHolder();
+		holder = sView.getHolder();
 		holder.addCallback(this);
 
-		hero = new Hero(getResources(), R.drawable.icon);
+		hero = new Hero(sView.getResources(), R.drawable.icon);
 
 		boms = new Bom[3];
 		for(int i=0; i<boms.length; i++){
-			boms[i] = new Bom(getResources(), R.drawable.icon);
+			boms[i] = new Bom(sView.getResources(), R.drawable.icon);
 		}
+
+		sView.setOnTouchListener(this);
 	}
 
 	public void draw(SurfaceHolder h) {
@@ -59,8 +61,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 		while(thread.isAlive());
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouch(View v, MotionEvent event) {
 		// TODO サーフェイスがタッチされて時の処理
 		Log.d("EVENT", ""+event.getAction());
 		int x = -1;
