@@ -95,7 +95,11 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		while(isAttached){
 			hero.move();
 			for(Bom b: boms){
-				b.drop();
+				b.move();
+				if(b.isHit(hero)){
+					isAttached = false;
+					break;
+				}
 			}
 			draw(holder);
 			try {
