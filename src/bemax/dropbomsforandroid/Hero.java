@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.View;
 
 public class Hero implements Movable{
 	private int x;
@@ -15,12 +16,12 @@ public class Hero implements Movable{
 	private int width;
 	private int height;
 
-	public Hero(Resources r, int id){
-		x = 190;
-		y = 400;
-		speed = 15;
-		target = 190;
-		bitmap = BitmapFactory.decodeResource(r, id);
+	public Hero(View view, int x, int y, int sp){
+		this.x = x;
+		this.y = y;
+		speed = sp;
+		target = x;
+		bitmap = BitmapFactory.decodeResource(view.getResources(), R.drawable.rubykun);
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
 	}

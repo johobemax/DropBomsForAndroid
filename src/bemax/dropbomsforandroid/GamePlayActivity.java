@@ -2,6 +2,7 @@ package bemax.dropbomsforandroid;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.SurfaceView;
 
 public class GamePlayActivity extends Activity {
@@ -14,7 +15,11 @@ public class GamePlayActivity extends Activity {
 
         setContentView(R.layout.gameplay);
         SurfaceView sView = (SurfaceView)findViewById(R.id.gameView);
-        gameView = new GameView(sView);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        gameView = new GameView(sView, dm);
     }
 
     @Override

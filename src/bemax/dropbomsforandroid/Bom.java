@@ -7,15 +7,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class Bom implements Movable{
-	private int x;
-	private int y;
-	private int speed;
-	private Bitmap bitmap;
-	private Random rand;
-	private int width;
-	private int height;
+	protected int x;
+	protected int y;
+	protected int speed;
+	protected Bitmap bitmap;
+	protected Random rand;
+	protected int width;
+	protected int height;
 
 	public Bom(Resources res, int id){
 		bitmap = BitmapFactory.decodeResource(res, id);
@@ -23,11 +24,12 @@ public class Bom implements Movable{
 		init();
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
+Log.d("Height",""+height);
 	}
 
 	public void init(){
 		x = rand.nextInt(400);
-		y = 0;
+		y = -height;
 		speed = rand.nextInt(5) + 5;
 	}
 
