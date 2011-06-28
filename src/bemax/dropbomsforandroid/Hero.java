@@ -1,29 +1,24 @@
 package bemax.dropbomsforandroid;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.View;
 
-public class Hero implements Movable{
-	private int x;
-	private int y;
-	private int speed;
-	private Bitmap bitmap;
+public class Hero extends Item{
 	private int target;
-	private int width;
-	private int height;
 
-	public Hero(View view, int x, int y, int sp){
-		this.x = x;
-		this.y = y;
-		speed = sp;
+	public Hero(View v){
+		super(v);
+		image = BitmapFactory.decodeResource(view.getResources(), R.drawable.rubykun);
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
+	}
+
+	public void init(){
+		x = (view.getWidth() - imageWidth ) / 2;
+		y = view.getHeight() - imageHeight * 4;
+		speed = view.getWidth() / 80;
 		target = x;
-		bitmap = BitmapFactory.decodeResource(view.getResources(), R.drawable.rubykun);
-		width = bitmap.getWidth();
-		height = bitmap.getHeight();
 	}
 
 	public void move(){
@@ -35,7 +30,7 @@ public class Hero implements Movable{
 				x += speed;
 			}
 		}else{
-			if(dx > speed){
+			if(dx > -speed){
 				x += dx;
 			}else{
 				x += -speed;
@@ -43,21 +38,8 @@ public class Hero implements Movable{
 		}
 	}
 
-	public void drawHero(Canvas canvas){
-		canvas.drawBitmap(bitmap, x, y, null);
-	}
-
 	public void chase(int tx){
-		target = tx - bitmap.getWidth() / 2;
+		target = tx - image.getWidth() / 2;
 	}
 
-	public Rect getRect() {
-		// TODO 自動生成されたメソッド・スタブ
-		return new Rect(x, y, x+width, y+height);
-	}
-
-	public boolean isHit(Movable m) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
 }

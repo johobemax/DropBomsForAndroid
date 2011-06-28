@@ -1,56 +1,45 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Random;
-
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
+import android.view.View;
 
-public class Bom implements Movable{
-	protected int x;
-	protected int y;
-	protected int speed;
-	protected Bitmap bitmap;
-	protected Random rand;
-	protected int width;
-	protected int height;
+public class Bom extends Item{
+	private Random rand;
 
-	public Bom(Resources res, int id){
-		bitmap = BitmapFactory.decodeResource(res, id);
+	public Bom(View v){
+		super(v);
+		image = BitmapFactory.decodeResource(v.getResources(), R.drawable.bom);
 		rand = new Random();
-		init();
-		width = bitmap.getWidth();
-		height = bitmap.getHeight();
-Log.d("Height",""+height);
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
 	}
 
 	public void init(){
-		x = rand.nextInt(400);
-		y = -height;
-		speed = rand.nextInt(5) + 5;
+		x = rand.nextInt(view.getWidth()-imageWidth);
+		y = -imageHeight;
+		speed = (rand.nextInt(4) + 1) * view.getHeight() / 200;
 	}
 
 	public void move(){
 		y += speed;
-		if(y>500){
+		if(y>view.getHeight()){
 			init();
 		}
 	}
 
-	public void drawBom(Canvas canvas){
-		canvas.drawBitmap(bitmap, x, y, null);
+	public boolean isHit(Hero h) {
+		// TODO 自動生成されたメソッド・スタブ
+		return h.getRect().contains(getRect().centerX(), getRect().centerY());
 	}
 
-	public Rect getRect() {
-		// TODO 自動生成されたメソッド・スタブ
-		return new Rect(x, y, x+width, y+height);
+	public void hit(){
+
 	}
 
 	public boolean isHit(Movable m) {
 		// TODO 自動生成されたメソッド・スタブ
-		return m.getRect().contains(getRect().centerX(), getRect().centerY());
+		return false;
 	}
 }

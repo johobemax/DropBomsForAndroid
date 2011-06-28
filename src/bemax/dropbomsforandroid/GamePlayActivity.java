@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 public class GamePlayActivity extends Activity {
 	private GameView gameView;
@@ -19,7 +20,7 @@ public class GamePlayActivity extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        gameView = new GameView(sView, dm);
+        gameView = new GameView(sView);
     }
 
     @Override
