@@ -1,23 +1,14 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Date;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.text.format.Time;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.TextView;
 
 public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListener{
 	private Hero hero;

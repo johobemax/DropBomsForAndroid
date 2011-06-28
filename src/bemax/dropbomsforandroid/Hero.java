@@ -1,7 +1,6 @@
 package bemax.dropbomsforandroid;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.view.View;
 
 public class Hero extends Item{

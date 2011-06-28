@@ -2,7 +2,6 @@ package bemax.dropbomsforandroid;
 
 import java.util.Random;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.view.View;
 
 public class Bom extends Item{

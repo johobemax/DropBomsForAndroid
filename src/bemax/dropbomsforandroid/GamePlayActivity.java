@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
-import android.widget.TextView;
 
 public class GamePlayActivity extends Activity {
 	private GameView gameView;
