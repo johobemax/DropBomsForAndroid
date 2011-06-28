@@ -19,14 +19,13 @@ public class GamePlayActivity extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        gameView = new GameView(sView);
+        gameView = new GameView(sView, this);
     }
 
     @Override
     protected void onStart() {
     	// TODO アクティビティが開始された
     	super.onStart();
-
     }
 
     @Override

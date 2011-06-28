@@ -1,9 +1,14 @@
 package bemax.dropbomsforandroid;
 
+import java.nio.channels.GatheringByteChannel;
 import java.util.Date;
+
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.sax.StartElementListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,12 +24,15 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private boolean isAttached;
 	private Thread thread;
 	private int score;
+	private Context context;
 
-	public GameView(SurfaceView sView) {
+	public GameView(SurfaceView sView, Context con) {
 		// TODO ペイントの初期化
 
 		holder = sView.getHolder();
 		holder.addCallback(this);
+
+		context = con;
 
 		hero = new Hero(sView);
 
@@ -156,5 +164,9 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 				}
 			}
 		}
+
+//		Intent intent = new Intent(context, GameOverActivity.class);
+//		intent.putExtra("score", score);
+//		context.startActivity(intent);
 	}
 }
