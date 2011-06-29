@@ -9,7 +9,7 @@ import android.view.View;
 
 public class Apple extends Item
 {
-	private boolean flg;
+	private boolean moveOK;
 	private Random rand;
 
 	public Apple(View v){
@@ -21,7 +21,7 @@ public class Apple extends Item
 	}
 
 	public void move(){
-		if(flg){
+		if(moveOK){
 			y += speed;
 			if(y > view.getHeight()){
 				init();
@@ -34,16 +34,16 @@ public class Apple extends Item
 		// TODO 自動生成されたメソッド・スタブ
 		x = rand.nextInt(view.getWidth()-imageWidth);
 		y = -imageHeight;
-		speed = (rand.nextInt(4) + 1) * view.getHeight() / 200;
-		flg = false;
+		speed = (rand.nextInt(4) + 3) * view.getHeight() / 400;
+		moveOK = false;
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
 				// TODO 自動生成されたメソッド・スタブ
-				flg = true;
+				moveOK = true;
 			}
 		};
-		timer.schedule(task, 3000 + rand.nextInt(5) * 500);
+		timer.schedule(task, 4000 + rand.nextInt(5) * 1000);
 	}
 }

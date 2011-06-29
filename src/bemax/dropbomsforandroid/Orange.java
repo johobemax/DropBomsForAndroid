@@ -9,6 +9,7 @@ import android.view.View;
 public class Orange extends Item{
 	private Bitmap image;
 	private Random rand;
+	private boolean moveOK;
 
 	public Orange(View v){
 		super(v);
@@ -16,6 +17,7 @@ public class Orange extends Item{
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 		rand = new Random();
+		moveOK = false;
 	}
 
 	public Bitmap getImage(){
@@ -27,15 +29,21 @@ public class Orange extends Item{
 		// TODO 自動生成されたメソッド・スタブ
 		x = rand.nextInt(view.getWidth()-imageWidth);
 		y = -imageHeight;
-		speed = (rand.nextInt(4) + 1) * view.getHeight() / 200;
+		speed = (rand.nextInt(4) + 3) * view.getHeight() / 400;
 	}
 
 	@Override
 	public void move() {
 		// TODO 自動生成されたメソッド・スタブ
-		y += speed;
-		if(y > view.getHeight()){
-			init();
+		if(moveOK){
+			y += speed;
+			if(y > view.getHeight()){
+				init();
+			}
 		}
+	}
+
+	public void setMoveOK(boolean b){
+		moveOK = b;
 	}
 }

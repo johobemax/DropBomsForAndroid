@@ -1,7 +1,18 @@
 package bemax.dropbomsforandroid;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream.PutField;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
 public class GameOverActivity extends Activity {
 
@@ -12,6 +23,48 @@ public class GameOverActivity extends Activity {
 
 	    // TODO Auto-generated method stub
 	    setContentView(R.layout.gameover);
+
+	    Intent intent = getIntent();
+	    int score = intent.getIntExtra("score", -1);
+
+	    if(score >= 0){
+		    int highscore = 0;
+
+		    try {
+				FileInputStream is = this.openFileInput("dropbomshighscore.dat");
+				DataInputStream dis = new DataInputStream(is);
+				highscore = dis.readInt();
+				is.close();
+			} catch (Exception e){
+				e.printStackTrace();
+				try{
+					FileOutputStream os = this.openFileOutput("dropbomshighscore.dat", MODE_PRIVATE);
+					DataOutputStream dos = new DataOutputStream(os);
+					dos.writeInt(0);
+					os.close();
+				}catch(IOException ee){
+					ee.printStackTrace();
+				}
+			}
+
+	    	TextView tv = (TextView)findViewById(R.id.score_text);
+	    	tv.setText("SCORE: "+score);
+
+	    	TextView htv = (TextView)findViewById(R.id.high_score_text);
+	    	if(score > highscore){
+	    		htv.setText("New Record !\nOld Recode " + highscore);
+	    		try{
+	    			FileOutputStream os = this.openFileOutput("dropbomshighscore.dat", MODE_PRIVATE);
+	    			DataOutputStream dos = new DataOutputStream(os);
+	    			dos.writeInt(score);
+	    			os.close();
+	    		}catch(Exception e){
+	    			e.printStackTrace();
+	    		}
+	    	}else{
+	    		htv.setText("HIGH SCORE: "+highscore);
+	    	}
+		}
 	}
 
 	@Override
