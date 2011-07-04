@@ -26,6 +26,7 @@ public class GameOverActivity extends Activity {
 
 	    Intent intent = getIntent();
 	    int score = intent.getIntExtra("score", -1);
+	    int get = intent.getIntExtra("get", -1);
 
 	    if(score >= 0){
 		    int highscore = 0;
@@ -64,6 +65,9 @@ public class GameOverActivity extends Activity {
 	    	}else{
 	    		htv.setText("HIGH SCORE: "+highscore);
 	    	}
+
+	    	TextView gtv = (TextView)findViewById(R.id.get_text);
+	    	gtv.setText("Get:" + get + "%");
 		}
 	}
 

@@ -22,7 +22,6 @@ public class DropBomsForAndroidActivity extends Activity implements OnTouchListe
         bom.setOnTouchListener(this);
     }
 
-    @Override
     protected void onStart() {
     	// TODO アクティビティが開始された
     	super.onStart();

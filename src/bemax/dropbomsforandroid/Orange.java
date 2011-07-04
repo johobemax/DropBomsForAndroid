@@ -10,6 +10,7 @@ public class Orange extends Item{
 	private Bitmap image;
 	private Random rand;
 	private boolean moveOK;
+	private int countDown;
 
 	public Orange(View v){
 		super(v);
@@ -17,33 +18,34 @@ public class Orange extends Item{
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 		rand = new Random();
-		moveOK = false;
+
+		speedBase = v.getWidth() / 400.0f;
 	}
+
 
 	public Bitmap getImage(){
 		return image;
 	}
 
 	@Override
-	public void init() {
+	public void init(int cd) {
 		// TODO 自動生成されたメソッド・スタブ
 		x = rand.nextInt(view.getWidth()-imageWidth);
 		y = -imageHeight;
-		speed = (rand.nextInt(4) + 3) * view.getHeight() / 400;
+		speed = (int)((rand.nextInt(4) + 3) * speedBase);
+		if(cd != 0){
+			countDown = cd;
+		}else{
+			countDown = rand.nextInt(5) * 10;
+		}
 	}
 
 	@Override
 	public void move() {
-		// TODO 自動生成されたメソッド・スタブ
-		if(moveOK){
+		if(countDown == 0){
 			y += speed;
-			if(y > view.getHeight()){
-				init();
-			}
+		}else{
+			countDown--;
 		}
-	}
-
-	public void setMoveOK(boolean b){
-		moveOK = b;
 	}
 }

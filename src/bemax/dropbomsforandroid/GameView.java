@@ -1,14 +1,11 @@
 package bemax.dropbomsforandroid;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -24,10 +21,14 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private boolean isAttached;
 	private Thread thread;
 	private int score;
+	private int get;
 	private Activity context;
+	private View view;
 
 	public GameView(SurfaceView sView, Activity con) {
 		// TODO ペイントの初期化
+
+		view = sView;
 
 		holder = sView.getHolder();
 		holder.addCallback(this);
@@ -49,6 +50,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		}
 
 		sView.setOnTouchListener(this);
+
 	}
 
 	public void draw(SurfaceHolder h) {
@@ -60,16 +62,20 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		canvas.drawColor(Color.BLACK);
 		canvas.drawBitmap(hero.getImage(), null, hero.getRect(), paint);
 		for(Bom b: boms){
-			canvas.drawBitmap(b.getImage(), null, b.getRect(), paint);
+			if(b.getY() > -b.getImageHeight())
+				canvas.drawBitmap(b.getImage(), null, b.getRect(), paint);
 		}
 
-		canvas.drawBitmap(apple.getImage(), null, apple.getRect(), paint);
+		if(apple.getY() > -apple.getImageHeight())
+			canvas.drawBitmap(apple.getImage(), null, apple.getRect(), paint);
 
 		for(Orange orange: oranges){
-			canvas.drawBitmap(orange.getImage(), null, orange.getRect(), paint);
+			if(orange.getY() > -orange.getImageHeight())
+				canvas.drawBitmap(orange.getImage(), null, orange.getRect(), paint);
 		}
 
 		canvas.drawText("SCORE:" + score, 30, 30, paint);
+		canvas.drawText("Get:" + get +"%", 230, 30, paint);
 		h.unlockCanvasAndPost(canvas);
 	}
 
@@ -121,44 +127,30 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	public void run() {
 		// TODO ゲームの処理ルーチン
 
-		hero.init();
+		hero.init(0);
 
 		for(Bom b: boms){
-			b.init();
+			b.setSpeedBase(view.getHeight()/300.0f);
+			b.init(50);
 		}
 
-		apple.init();
+		apple.setSpeedBase(view.getHeight()/300.0f);
+		apple.init(200);
 
 		for(Orange orange: oranges){
-			orange.init();
+			orange.setSpeedBase(view.getHeight()/300.0f);
+			orange.init(50);
 		}
 
-		Date date = new Date();
-
 		score = 0;
+		get = 0;
+		int getnum = 0;
+		int dropnum = 0;
 
 		boolean nohit = true;
 
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask(){
-			@Override
-			public void run() {
-				// TODO 設定時間後に実行されるタスク
-				for(Bom b: boms){
-					b.setMoveOK(true);
-				}
-
-				for(Orange orange: oranges){
-					orange.setMoveOK(true);
-				}
-			}
-		};
-
-		//1.5秒後から爆弾などが落ちてくる
-		timer.schedule(task, 1500);
-
 		while(isAttached & nohit){
-			long st = date.getTime();
+			long st = System.currentTimeMillis();
 
 			hero.move();
 
@@ -168,28 +160,52 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 					nohit = false;
 					break;
 				}
+				if(b.getRect().top > view.getHeight()){
+					b.init(0);
+				}
 			}
 
 			apple.move();
 			if(apple.isHit(hero)){
-				apple.init();
+				apple.init(0);
 				score += 100;
+				getnum ++;
+				dropnum ++;
+			}
+			if(apple.getRect().top > view.getHeight()){
+				apple.init(0);
+				score -= 200;
+				dropnum ++;
 			}
 
 			for(Orange orange: oranges){
 				orange.move();
 				if(orange.isHit(hero)){
-					orange.init();
+					orange.init(0);
 					score += 10;
+					getnum ++;
+					dropnum ++;
+				}
+				if(orange.getRect().top > view.getHeight()){
+					orange.init(0);
+					score -= 20;
+					dropnum ++;
 				}
 			}
 
+			if(dropnum > 0){
+				get = 100 * getnum / dropnum;
+			}
+
+			if(score<0) score = 0;
+
 			draw(holder);
 
-			long ed = date.getTime();
-			if(ed-st < 10){
+			long ed = System.currentTimeMillis();
+
+			if(ed-st < 30){
 				try {
-					Thread.sleep(10-ed+st);
+					Thread.sleep(30-ed+st);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -201,6 +217,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		if(!nohit){
 			Intent intent = new Intent(context, GameOverActivity.class);
 			intent.putExtra("score", score);
+			intent.putExtra("get", get);
 			context.startActivity(intent);
 		}
 		context.finish();

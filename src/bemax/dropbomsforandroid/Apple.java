@@ -9,8 +9,8 @@ import android.view.View;
 
 public class Apple extends Item
 {
-	private boolean moveOK;
 	private Random rand;
+	private int countDown;
 
 	public Apple(View v){
 		super(v);
@@ -18,32 +18,28 @@ public class Apple extends Item
 		rand = new Random();
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
+
+		speedBase = v.getWidth() / 400.0f;
 	}
 
 	public void move(){
-		if(moveOK){
+		if(countDown == 0){
 			y += speed;
-			if(y > view.getHeight()){
-				init();
-			}
+		}else{
+			countDown--;
 		}
 	}
 
 	@Override
-	public void init() {
+	public void init(int cd) {
 		// TODO 自動生成されたメソッド・スタブ
 		x = rand.nextInt(view.getWidth()-imageWidth);
 		y = -imageHeight;
-		speed = (rand.nextInt(4) + 3) * view.getHeight() / 400;
-		moveOK = false;
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run() {
-				// TODO 自動生成されたメソッド・スタブ
-				moveOK = true;
-			}
-		};
-		timer.schedule(task, 4000 + rand.nextInt(5) * 1000);
+		speed = (int)((rand.nextInt(4) + 3) * speedBase);
+		if(cd != 0){
+			countDown = cd;
+		}else{
+			countDown = rand.nextInt(5)*50 + 100;
+		}
 	}
 }

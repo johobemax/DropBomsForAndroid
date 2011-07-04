@@ -1,7 +1,5 @@
 package bemax.dropbomsforandroid;
 
-import java.util.TimerTask;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -15,12 +13,13 @@ public abstract class Item implements Movable{
 	protected int imageWidth;
 	protected int imageHeight;
 	protected View view;
+	protected float speedBase;
 
 	public Item(View v) {
 		view = v;
 	}
 
-	public abstract void init();
+	public abstract void init(int cd);
 
 	public void setImage(int id){
 		image = BitmapFactory.decodeResource(view.getResources(), id);
@@ -62,5 +61,9 @@ public abstract class Item implements Movable{
 
 	public Rect getRect(){
 		return new Rect(x, y, x + imageWidth, y + imageHeight);
+	}
+
+	public void setSpeedBase(float f){
+		speedBase = f;
 	}
 }
