@@ -12,9 +12,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameOverActivity extends Activity {
+public class GameOverActivity extends Activity implements OnClickListener{
 
 	/** Called when the activity is first created. */
 	@Override
@@ -69,6 +72,9 @@ public class GameOverActivity extends Activity {
 	    	TextView gtv = (TextView)findViewById(R.id.get_text);
 	    	gtv.setText("Get:" + get + "%");
 		}
+
+	    ImageView image = (ImageView)findViewById(R.id.game_over_image);
+	    image.setOnClickListener(this);
 	}
 
 	@Override
@@ -105,6 +111,11 @@ public class GameOverActivity extends Activity {
 	protected void onStop() {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onStop();
+	}
+
+	public void onClick(View v) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.finish();
 	}
 
 

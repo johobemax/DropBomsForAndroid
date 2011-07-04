@@ -23,44 +23,54 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private int score;
 	private int get;
 	private Activity context;
-	private View view;
+	private SurfaceView view;
 
 	public GameView(SurfaceView sView, Activity con) {
 		// TODO ペイントの初期化
 
 		view = sView;
 
-		holder = sView.getHolder();
+		holder = view.getHolder();
 		holder.addCallback(this);
 
 		context = con;
 
-		hero = new Hero(sView);
+		hero = new Hero(view);
 
 		boms = new Bom[4];
 		for(int i=0; i<boms.length; i++){
-			boms[i] = new Bom(sView);
+			boms[i] = new Bom(view);
 		}
 
-		apple = new Apple(sView);
+		apple = new Apple(view);
 
 		oranges = new Orange[2];
 		for(int i=0; i<oranges.length; i++){
-			oranges[i] = new Orange(sView);
+			oranges[i] = new Orange(view);
 		}
 
-		sView.setOnTouchListener(this);
+		view.setOnTouchListener(this);
 
 	}
 
 	public void draw(SurfaceHolder h) {
 		// TODO 画像を書く
+		float horizon = view.getHeight() * 0.7f;
+
 		Paint paint = new Paint();
 		paint.setTextSize(30);
-		paint.setColor(Color.WHITE);
 		Canvas canvas = h.lockCanvas();
-		canvas.drawColor(Color.BLACK);
+		paint.setColor(view.getResources().getColor(R.color.sky));
+		canvas.drawRect(0.0f,0.0f,(float)view.getWidth(), horizon, paint);
+		paint.setColor(view.getResources().getColor(R.color.grass));
+		canvas.drawRect(0.0f, horizon, (float)view.getWidth(), (float)view.getHeight(), paint);
+
+		paint.setColor(Color.WHITE);
+		canvas.drawText("SCORE:" + score, 30, 30, paint);
+		canvas.drawText("Get:" + get +"%", 230, 30, paint);
+
 		canvas.drawBitmap(hero.getImage(), null, hero.getRect(), paint);
+
 		for(Bom b: boms){
 			if(b.getY() > -b.getImageHeight())
 				canvas.drawBitmap(b.getImage(), null, b.getRect(), paint);
@@ -74,8 +84,6 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 				canvas.drawBitmap(orange.getImage(), null, orange.getRect(), paint);
 		}
 
-		canvas.drawText("SCORE:" + score, 30, 30, paint);
-		canvas.drawText("Get:" + get +"%", 230, 30, paint);
 		h.unlockCanvasAndPost(canvas);
 	}
 

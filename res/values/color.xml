@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="start_text">#FFA</color>
-    <color name="title">#FFFF</color>
+    <color name="title">#FFF</color>
     <color name="title_background">#335</color>
-    
+    <color name="grass">#282</color>
+    <color name="sky">#44F</color>
 </resources>

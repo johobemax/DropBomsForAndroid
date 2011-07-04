@@ -15,7 +15,7 @@ public class Hero extends Item{
 
 	public void init(int cd){
 		x = (view.getWidth() - imageWidth ) / 2;
-		y = (int)(view.getHeight()*0.6)+imageHeight/2 ;
+		y = (int)(view.getHeight()*0.7 - imageHeight * 1.1);
 		speed = view.getWidth() / 40;
 		target = x;
 	}
