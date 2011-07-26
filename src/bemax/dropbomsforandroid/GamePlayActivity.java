@@ -1,7 +1,10 @@
 package bemax.dropbomsforandroid;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
@@ -23,7 +26,7 @@ public class GamePlayActivity extends Activity {
         gameView = new GameView(sView, this);
     }
 
-    @Override
+	@Override
     protected void onStart() {
     	// TODO アクティビティが開始された
     	super.onStart();

@@ -1,10 +1,13 @@
 package bemax.dropbomsforandroid;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,9 +27,15 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private int get;
 	private Activity context;
 	private SurfaceView view;
+	private SoundEffect se;
+	private MediaPlayer mp;
 
 	public GameView(SurfaceView sView, Activity con) {
 		// TODO ペイントの初期化
+
+		se = new SoundEffect(con, 10);
+		se.addSound(R.raw.item_get);
+		se.addSound(R.raw.bom);
 
 		view = sView;
 
@@ -51,6 +60,16 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 		view.setOnTouchListener(this);
 
+		mp = MediaPlayer.create(context, R.raw.music);
+		try {
+			mp.prepare();
+		} catch (IllegalStateException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 	}
 
 	public void draw(SurfaceHolder h) {
@@ -133,7 +152,8 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	}
 
 	public void run() {
-		// TODO ゲームの処理ルーチン
+
+		mp.start();
 
 		hero.init(0);
 
@@ -168,19 +188,21 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 					nohit = false;
 					break;
 				}
-				if(b.getRect().top > view.getHeight()){
+				if(b.getRect().top > view.getHeight() - 200){
 					b.init(0);
+					se.play(R.raw.bom);
 				}
 			}
 
 			apple.move();
 			if(apple.isHit(hero)){
+				se.play(R.raw.item_get);
 				apple.init(0);
 				score += 100;
 				getnum ++;
 				dropnum ++;
 			}
-			if(apple.getRect().top > view.getHeight()){
+			if(apple.getRect().top > view.getHeight() - 200){
 				apple.init(0);
 				score -= 200;
 				dropnum ++;
@@ -189,12 +211,13 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 			for(Orange orange: oranges){
 				orange.move();
 				if(orange.isHit(hero)){
+					se.play(R.raw.item_get);
 					orange.init(0);
 					score += 10;
 					getnum ++;
 					dropnum ++;
 				}
-				if(orange.getRect().top > view.getHeight()){
+				if(orange.getRect().top > view.getHeight() - 200){
 					orange.init(0);
 					score -= 20;
 					dropnum ++;
@@ -228,6 +251,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 			intent.putExtra("get", get);
 			context.startActivity(intent);
 		}
+		mp.release();
 		context.finish();
 	}
 }
