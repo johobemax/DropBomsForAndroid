@@ -11,11 +11,8 @@ public class Bom extends Item{
 
 	public Bom(View v){
 		super(v);
-		image = BitmapFactory.decodeResource(v.getResources(), R.drawable.bom);
+		setImage(R.drawable.bom);
 		rand = new Random();
-		imageWidth = image.getWidth();
-		imageHeight = image.getHeight();
-
 		speedBase = v.getWidth() / 400.0f;
 	}
 
@@ -38,17 +35,11 @@ public class Bom extends Item{
 		}
 	}
 
-	public boolean isHit(Hero h) {
-		// TODO 自動生成されたメソッド・スタブ
-		return h.getRect().contains(getRect().centerX(), getRect().centerY());
-	}
-
-	public void hit(){
-
-	}
-
-	public boolean isHit(Movable m) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
+//	public boolean isHit(Hero h) {
+//		int zoc = (int)((h.getRect().width() + getRect().width()) / 2);
+//		int xlen = h.getRect().centerX() - getRect().centerX();
+//		int ylen = h.getRect().centerY() - getRect().centerY();
+//		int dist = (int) Math.sqrt(xlen*xlen+ylen*ylen);
+//		return dist < zoc ? true : false;
+//	}
 }

@@ -1,10 +1,6 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import android.graphics.BitmapFactory;
 import android.view.View;
 
 public class Apple extends Item
@@ -14,10 +10,9 @@ public class Apple extends Item
 
 	public Apple(View v){
 		super(v);
-		image = BitmapFactory.decodeResource(v.getResources(), R.drawable.apple);
+		setImage(R.drawable.apple);
+		zoc = (int)(imageWidth * 0.5);
 		rand = new Random();
-		imageWidth = image.getWidth();
-		imageHeight = image.getHeight();
 
 		speedBase = v.getWidth() / 400.0f;
 	}

@@ -55,6 +55,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 		activity.setMp(MediaPlayer.create(activity, R.raw.music));
 		try {
+			activity.getMp().setLooping(true);
 			activity.getMp().prepare();
 		} catch (IllegalStateException e) {
 			// TODO 自動生成された catch ブロック

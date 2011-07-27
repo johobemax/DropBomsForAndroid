@@ -20,6 +20,7 @@ public class Hero extends Item{
 		image = images[0];
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
+		zoc = (int)(imageWidth * 0.4);
 	}
 
 	public void init(int cd){

@@ -14,6 +14,7 @@ public abstract class Item implements Movable{
 	protected int imageHeight;
 	protected View view;
 	protected float speedBase;
+	protected int zoc;
 
 	public Item(View v) {
 		view = v;
@@ -23,16 +24,19 @@ public abstract class Item implements Movable{
 
 	public void setImage(int id){
 		image = BitmapFactory.decodeResource(view.getResources(), id);
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
+		zoc = (int)(imageWidth * 0.4);
 	}
 
 	public abstract void move();
 
-	public boolean isHit(Movable m){
+	public boolean isHit(Item m){
 		int dx = m.getRect().centerX() - getRect().centerX();
 		int dy = m.getRect().centerY() - getRect().centerY();
 		double len = Math.sqrt(dx * dx + dy * dy);
 
-		if(len <= imageWidth){
+		if(len <= m.zoc + zoc){
 			return true;
 		}else{
 			return false;
