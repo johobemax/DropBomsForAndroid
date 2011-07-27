@@ -1,13 +1,12 @@
 package bemax.dropbomsforandroid;
 
 import java.io.IOException;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -24,24 +23,19 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private Thread thread;
 	private int score;
 	private int get;
-	private Activity context;
+	private DropBomsForAndroidActivity activity;
 	private SurfaceView view;
-	private SoundEffect se;
-	private MediaPlayer mp;
+	private Handler handler;
 
-	public GameView(SurfaceView sView, Activity con) {
-		// TODO ペイントの初期化
+	public GameView(DropBomsForAndroidActivity act, Handler h) {
+		activity = act;
+		handler  = h;
 
-		se = new SoundEffect(con, 10);
-		se.addSound(R.raw.item_get);
-		se.addSound(R.raw.bom);
-
-		view = sView;
+		activity.setContentView(R.layout.gameplay);
+		view = (SurfaceView)activity.findViewById(R.id.gameView);
 
 		holder = view.getHolder();
 		holder.addCallback(this);
-
-		context = con;
 
 		hero = new Hero(view);
 
@@ -59,9 +53,9 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 		view.setOnTouchListener(this);
 
-		mp = MediaPlayer.create(context, R.raw.music);
+		activity.setMp(MediaPlayer.create(activity, R.raw.music));
 		try {
-			mp.prepare();
+			activity.getMp().prepare();
 		} catch (IllegalStateException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -152,7 +146,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 	public void run() {
 
-		mp.start();
+		activity.getMp().start();
 
 		hero.init(0);
 
@@ -189,13 +183,13 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 				}
 				if(b.getRect().top > view.getHeight() - 200){
 					b.init(0);
-					se.play(R.raw.bom);
+					activity.getSp().play(activity.getSeMap().get(R.raw.bom), 0.5f, 0.5f, 0,0,1.0f);
 				}
 			}
 
 			apple.move();
 			if(apple.isHit(hero)){
-				se.play(R.raw.item_get);
+				activity.getSp().play(activity.getSeMap().get(R.raw.item_get), 0.5f, 0.5f, 0,0,1.0f);
 				apple.init(0);
 				score += 100;
 				getnum ++;
@@ -210,7 +204,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 			for(Orange orange: oranges){
 				orange.move();
 				if(orange.isHit(hero)){
-					se.play(R.raw.item_get);
+					activity.getSp().play(activity.getSeMap().get(R.raw.item_get), 0.5f, 0.5f, 0,0,1.0f);
 					orange.init(0);
 					score += 10;
 					getnum ++;
@@ -245,12 +239,11 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 		//爆弾にぶつかってループが終了していれば、GameOver画面を出す。
 		if(!nohit){
-			Intent intent = new Intent(context, GameOverActivity.class);
-			intent.putExtra("score", score);
-			intent.putExtra("get", get);
-			context.startActivity(intent);
+			Message mes = Message.obtain(handler);
+			mes.obj = new int[]{score, get};
+			mes.what = 2;
+			mes.sendToTarget();
 		}
-		mp.release();
-		context.finish();
+		activity.getMp().release();
 	}
 }
