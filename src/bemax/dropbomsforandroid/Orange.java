@@ -1,9 +1,6 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Random;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 
 public class Orange extends Item{

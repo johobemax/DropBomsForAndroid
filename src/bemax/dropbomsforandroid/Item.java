@@ -1,8 +1,5 @@
 package bemax.dropbomsforandroid;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.view.View;
 
 public abstract class Item extends Acter{

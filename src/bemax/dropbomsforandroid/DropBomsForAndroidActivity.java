@@ -9,14 +9,11 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.ImageView;
 
 public class DropBomsForAndroidActivity extends Activity implements OnTouchListener,OnLoadCompleteListener{
-	private ImageView bom;
 	private MediaPlayer mp;
 	private SoundPool sp;
 	private HashMap<Integer,Integer> seMap;

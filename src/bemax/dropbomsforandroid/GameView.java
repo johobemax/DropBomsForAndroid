@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.text.Format;
 import java.util.Formatter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -30,6 +34,8 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private SurfaceView view;
 	private Handler handler;
 	private long dist;
+	private Bitmap backImage;
+	private float horizon;
 
 	public GameView(DropBomsForAndroidActivity act, Handler h) {
 		activity = act;
@@ -70,15 +76,23 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		}
 	}
 
+	public void init(){
+		backImage = BitmapFactory.decodeResource(view.getResources(), R.drawable.universe);
+		horizon = view.getHeight() * 0.7f;
+		float scale = horizon / backImage.getHeight() * 0.8f;
+		backImage = Bitmap.createScaledBitmap(backImage, (int)(backImage.getWidth()*scale)+1, (int)(backImage.getHeight()*scale)+1, true);
+	}
+
 	public void draw(SurfaceHolder h) {
 		// TODO 画像を書く
-		float horizon = view.getHeight() * 0.7f;
+		//float horizon = view.getHeight() * 0.7f;
 
 		Paint paint = new Paint();
 		paint.setTextSize(30);
 		Canvas canvas = h.lockCanvas();
 		paint.setColor(view.getResources().getColor(R.color.sky));
 		canvas.drawRect(0.0f,0.0f,(float)view.getWidth(), horizon, paint);
+		canvas.drawBitmap(backImage, 0.0f, 0.0f,paint);
 		paint.setColor(view.getResources().getColor(R.color.grass));
 		canvas.drawRect(0.0f, horizon, (float)view.getWidth(), (float)view.getHeight(), paint);
 
@@ -112,6 +126,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO サーフェイスが作成された時の処理
+		init();
 		isAttached = true;
 		thread = new Thread(this);
 		thread.start();

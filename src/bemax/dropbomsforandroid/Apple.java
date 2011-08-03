@@ -1,9 +1,6 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Random;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 
 public class Apple extends Item
@@ -13,7 +10,7 @@ public class Apple extends Item
 
 	public Apple(View v){
 		super(v);
-		setImage(R.drawable.apple);
+		setImage(R.drawable.ruby);
 		zoc = (int)(getImageWidth() * 0.5);
 		rand = new Random();
 

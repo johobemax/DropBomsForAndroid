@@ -4,5 +4,5 @@
     <color name="title">#FFF</color>
     <color name="title_background">#335</color>
     <color name="grass">#282</color>
-    <color name="sky">#44F</color>
+    <color name="sky">#000</color>
 </resources>
