@@ -5,69 +5,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.view.View;
 
-public abstract class Item implements Movable{
-	protected int x;
-	protected int y;
-	protected int speed;
-	protected Bitmap image;
-	protected int imageWidth;
-	protected int imageHeight;
-	protected View view;
-	protected float speedBase;
-	protected int zoc;
+public abstract class Item extends Acter{
+	protected int point;
 
 	public Item(View v) {
-		view = v;
+		super(v);
 	}
 
-	public abstract void init(int cd);
-
-	public void setImage(int id){
-		image = BitmapFactory.decodeResource(view.getResources(), id);
-		imageWidth = image.getWidth();
-		imageHeight = image.getHeight();
-		zoc = (int)(imageWidth * 0.4);
-	}
-
-	public abstract void move();
-
-	public boolean isHit(Item m){
-		int dx = m.getRect().centerX() - getRect().centerX();
-		int dy = m.getRect().centerY() - getRect().centerY();
+	public boolean isHit(Hero h){
+		int dx = h.getRect().centerX() - getRect().centerX();
+		int dy = h.getRect().centerY() - getRect().centerY();
 		double len = Math.sqrt(dx * dx + dy * dy);
 
-		if(len <= m.zoc + zoc){
+		if(len <= h.zoc + zoc){
 			return true;
 		}else{
 			return false;
 		}
-	}
-
-	public Bitmap getImage() {
-		return image;
-	}
-
-	public int getImageWidth() {
-		return imageWidth;
-	}
-
-	public int getImageHeight() {
-		return imageHeight;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public Rect getRect(){
-		return new Rect(x, y, x + imageWidth, y + imageHeight);
-	}
-
-	public void setSpeedBase(float f){
-		speedBase = f;
 	}
 }
