@@ -21,10 +21,10 @@ public class Animation {
 	}
 
 	public  Bitmap nextImage(){
-		Bitmap bmp = images[imageCnt];
 		cnt++;
 		if(cnt==step){
 			imageCnt = (imageCnt + 1)==images.length ? 0 : imageCnt + 1;
+			cnt = 0;
 		}
 		return images[imageCnt];
 	}

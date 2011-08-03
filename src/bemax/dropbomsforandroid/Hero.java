@@ -1,7 +1,5 @@
 package bemax.dropbomsforandroid;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 
 public class Hero extends Acter{
@@ -13,7 +11,7 @@ public class Hero extends Acter{
 				R.drawable.ruby_p1,
 				R.drawable.ruby_p2,
 				R.drawable.ruby_p3,
-				R.drawable.ruby_p2}, 5);
+				R.drawable.ruby_p2}, 100);
 		zoc = (int)(getImageWidth() * 0.4);
 	}
 

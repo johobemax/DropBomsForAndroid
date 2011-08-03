@@ -1,6 +1,9 @@
 package bemax.dropbomsforandroid;
 
 import java.io.IOException;
+import java.text.Format;
+import java.util.Formatter;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -82,14 +85,9 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		paint.setColor(Color.WHITE);
 		canvas.drawText("SCORE:" + score, 30, 30, paint);
 		canvas.drawText("Get:" + get +"%", 230, 30, paint);
-		canvas.drawText("dist:" + dist, 30, view.getHeight() - 50, paint);
+		canvas.drawText("dist:" + new Formatter().format("%03d",dist).toString(), 30, view.getHeight() - 250, paint);
 
 		canvas.drawBitmap(hero.getImage(), null, hero.getRect(), paint);
-
-		for(Bom b: boms){
-			if(b.getY() > -b.getImageHeight())
-				canvas.drawBitmap(b.getImage(), null, b.getRect(), paint);
-		}
 
 		if(apple.getY() > -apple.getImageHeight())
 			canvas.drawBitmap(apple.getImage(), null, apple.getRect(), paint);
@@ -97,6 +95,11 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		for(Orange orange: oranges){
 			if(orange.getY() > -orange.getImageHeight())
 				canvas.drawBitmap(orange.getImage(), null, orange.getRect(), paint);
+		}
+
+		for(Bom b: boms){
+			if(b.getY() > -b.getImageHeight())
+				canvas.drawBitmap(b.getImage(), null, b.getRect(), paint);
 		}
 
 		h.unlockCanvasAndPost(canvas);
