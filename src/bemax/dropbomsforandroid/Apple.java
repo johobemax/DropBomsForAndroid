@@ -1,9 +1,6 @@
 package bemax.dropbomsforandroid;
 
 import java.util.Random;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 
 public class Apple extends Item
@@ -14,7 +11,7 @@ public class Apple extends Item
 	public Apple(View v){
 		super(v);
 		setImage(R.drawable.apple);
-		zoc = (int)(getImageWidth() * 0.5);
+		zoc = (int)(imageWidth * 0.5);
 		rand = new Random();
 
 		speedBase = v.getWidth() / 400.0f;
@@ -26,20 +23,18 @@ public class Apple extends Item
 		}else{
 			countDown--;
 		}
-		//nextAnimation();
 	}
 
 	@Override
 	public void init(int cd) {
 		// TODO 自動生成されたメソッド・スタブ
-		x = rand.nextInt(view.getWidth()-getImageWidth());
-		y = -getImageHeight();
+		x = rand.nextInt(view.getWidth()-imageWidth);
+		y = -imageHeight;
 		speed = (int)((rand.nextInt(4) + 3) * speedBase);
 		if(cd != 0){
 			countDown = cd;
 		}else{
 			countDown = rand.nextInt(5)*50 + 100;
 		}
-		//initAnimation();
 	}
 }

@@ -4,27 +4,32 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 
-public class Hero extends Acter{
+public class Hero extends Item{
 	private int target;
+	private Bitmap[] images;
+	private int anim_cnt;
 
 	public Hero(View v){
 		super(v);
-		animation = new Animation(v.getResources(), new int[]{
-				R.drawable.ruby_p1,
-				R.drawable.ruby_p2,
-				R.drawable.ruby_p3,
-				R.drawable.ruby_p2}, 5);
-		zoc = (int)(getImageWidth() * 0.4);
+		anim_cnt = 0;
+		images = new Bitmap[4];
+		images[0] = BitmapFactory.decodeResource(view.getResources(), R.drawable.ruby_p1);
+		images[1] = BitmapFactory.decodeResource(view.getResources(), R.drawable.ruby_p2);
+		images[2] = BitmapFactory.decodeResource(view.getResources(), R.drawable.ruby_p3);
+		images[3] = BitmapFactory.decodeResource(view.getResources(), R.drawable.ruby_p2);
+		image = images[0];
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
+		zoc = (int)(imageWidth * 0.4);
 	}
 
 	public void init(int cd){
-		x = (view.getWidth() - getImageWidth() ) / 2;
-		y = (int)(view.getHeight()*0.7 - getImageHeight() * 0.8);
+		x = (view.getWidth() - imageWidth ) / 2;
+		y = (int)(view.getHeight()*0.7 - imageHeight * 0.8);
 		speed = view.getWidth() / 40;
 		target = x;
 	}
 
-	@Override
 	public void move(){
 		int dx = target - x;
 		if(dx>=0){
@@ -40,10 +45,15 @@ public class Hero extends Acter{
 				x += -speed;
 			}
 		}
-		setImage(animation.nextImage());
+		anim_cnt++;
+		if(anim_cnt % 5 == 0){
+			if(anim_cnt==20) anim_cnt = 0;
+			image = images[anim_cnt / 5];
+		}
 	}
 
 	public void chase(int tx){
-		target = tx - getImageWidth() / 2;
+		target = tx - image.getWidth() / 2;
 	}
+
 }
