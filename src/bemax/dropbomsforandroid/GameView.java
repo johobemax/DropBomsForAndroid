@@ -26,6 +26,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	private DropBomsForAndroidActivity activity;
 	private SurfaceView view;
 	private Handler handler;
+	private long dist;
 
 	public GameView(DropBomsForAndroidActivity act, Handler h) {
 		activity = act;
@@ -81,6 +82,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		paint.setColor(Color.WHITE);
 		canvas.drawText("SCORE:" + score, 30, 30, paint);
 		canvas.drawText("Get:" + get +"%", 230, 30, paint);
+		canvas.drawText("dist:" + dist, 30, view.getHeight() - 50, paint);
 
 		canvas.drawBitmap(hero.getImage(), null, hero.getRect(), paint);
 
@@ -227,8 +229,9 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 			draw(holder);
 
 			long ed = System.currentTimeMillis();
+			dist = ed - st;
 
-			if(ed-st < 30){
+			if(dist < 30){
 				try {
 					Thread.sleep(30-ed+st);
 				} catch (InterruptedException e) {
