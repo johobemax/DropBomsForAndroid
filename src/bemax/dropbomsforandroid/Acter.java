@@ -6,9 +6,9 @@ import android.graphics.Rect;
 import android.view.View;
 
 public abstract class Acter {
-	protected int x;
-	protected int y;
-	protected int speed;
+	protected float x;
+	protected float y;
+	protected float speed;
 	protected Bitmap image;
 	protected View view;
 	protected float speedBase;
@@ -49,16 +49,16 @@ public abstract class Acter {
 		return getImage().getHeight();
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
 	public Rect getRect(){
-		return new Rect(x, y, x + getImageWidth(), y + getImageHeight());
+		return new Rect((int)x, (int)y, (int)x + getImageWidth(), (int)y + getImageHeight());
 	}
 
 	public void setSpeedBase(float f){

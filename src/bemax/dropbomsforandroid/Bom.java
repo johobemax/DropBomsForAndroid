@@ -6,21 +6,23 @@ import android.view.View;
 public class Bom extends Item{
 	private Random rand;
 	private int countDown;
-	private int xSpeed;
+	private float xSpeed;
+	private float ySpeed;
 
 	public Bom(View v){
 		super(v);
 		setImage(R.drawable.bom);
 		rand = new Random();
-		speedBase = v.getWidth() / 400.0f;
+		speedBase = v.getHeight() / 400.0f;
 		zoc = (int)(getImageWidth() * 0.4);
+		ySpeed = 2;
 	}
 
 	public void init(int cd){
 		x = rand.nextInt(view.getWidth()-getImageWidth());
 		y = -getImageHeight();
-		xSpeed = rand.nextInt(7) - 3;
-		speed = (int)((rand.nextInt(4) + 3) * speedBase);
+		speed = (rand.nextInt(4) + ySpeed) * speedBase;
+		xSpeed = (float)Math.sin((rand.nextInt(9) - 5)*Math.PI*5/180)*speed;
 		if(cd != 0){
 			countDown = cd;
 		}else{

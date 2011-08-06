@@ -1,16 +1,13 @@
 package bemax.dropbomsforandroid;
 
 import java.io.IOException;
-import java.text.Format;
 import java.util.Formatter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -79,7 +76,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 	public void init(){
 		backImage = BitmapFactory.decodeResource(view.getResources(), R.drawable.universe);
 		horizon = view.getHeight() * 0.7f;
-		float scale = horizon / backImage.getHeight() * 0.8f;
+		float scale = horizon / backImage.getWidth() * 0.9f;
 		backImage = Bitmap.createScaledBitmap(backImage, (int)(backImage.getWidth()*scale)+1, (int)(backImage.getHeight()*scale)+1, true);
 	}
 
@@ -92,7 +89,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		Canvas canvas = h.lockCanvas();
 		paint.setColor(view.getResources().getColor(R.color.sky));
 		canvas.drawRect(0.0f,0.0f,(float)view.getWidth(), horizon, paint);
-		canvas.drawBitmap(backImage, 0.0f, 0.0f,paint);
+//		canvas.drawBitmap(backImage, 0.0f, 0.0f,paint);
 		paint.setColor(view.getResources().getColor(R.color.grass));
 		canvas.drawRect(0.0f, horizon, (float)view.getWidth(), (float)view.getHeight(), paint);
 

@@ -19,12 +19,12 @@ public class Hero extends Acter{
 		x = (view.getWidth() - getImageWidth() ) / 2;
 		y = (int)(view.getHeight()*0.7 - getImageHeight() * 0.8);
 		speed = view.getWidth() / 40;
-		target = x;
+		target = (int)x;
 	}
 
 	@Override
 	public void move(){
-		int dx = target - x;
+		int dx = target - (int)x;
 		if(dx>=0){
 			if(dx < speed){
 				x += dx;
