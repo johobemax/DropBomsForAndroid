@@ -96,7 +96,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 		paint.setColor(Color.WHITE);
 		canvas.drawText("SCORE:" + score, 30, 30, paint);
 		canvas.drawText("Get:" + get +"%", 230, 30, paint);
-		canvas.drawText("dist:" + new Formatter().format("%03d",dist).toString(), 30, view.getHeight() - 250, paint);
+//		canvas.drawText("dist:" + new Formatter().format("%03d",dist).toString(), 30, view.getHeight() - 250, paint);
 
 		canvas.drawBitmap(hero.getImage(), null, hero.getRect(), paint);
 

@@ -3,13 +3,14 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_height="match_parent" android:layout_width="match_parent">
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:orientation="vertical" android:layout_height="match_parent" android:gravity="center">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:orientation="vertical" android:gravity="center" android:layout_height="match_parent">
         <TextView android:textSize="30dp" android:textStyle="bold" android:gravity="center" android:text="@string/game_over" android:layout_width="match_parent" android:layout_height="wrap_content" android:typeface="normal" android:id="@+id/game_over_title"></TextView>
         <ImageView android:src="@drawable/gameover" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/game_over_image"></ImageView>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/score_text" android:textSize="30dp"></TextView>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15px" android:text="音楽・サウンド: 音楽素材/魔王魂様より"></TextView>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/high_score_text"></TextView>
         <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/get_text"></TextView>
+        <TextView android:layout_height="wrap_content" android:textSize="15px" android:layout_width="wrap_content" android:text="音楽・サウンド: 音楽素材/魔王魂様より" android:paddingTop="50px"></TextView>
     </LinearLayout>
-    
+
+
 </LinearLayout>
