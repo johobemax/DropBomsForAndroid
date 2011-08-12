@@ -10,7 +10,7 @@ public class Apple extends Item
 
 	public Apple(View v){
 		super(v);
-		setImage(R.drawable.ruby);
+		setImage(R.drawable.apple);
 		zoc = (int)(getImageWidth() * 0.5);
 		rand = new Random();
 

@@ -46,7 +46,7 @@ public class GameView implements SurfaceHolder.Callback, Runnable, OnTouchListen
 
 		hero = new Hero(view);
 
-		boms = new Bom[4];
+		boms = new Bom[3];
 		for(int i=0; i<boms.length; i++){
 			boms[i] = new Bom(view);
 		}
